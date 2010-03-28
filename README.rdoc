@@ -5,6 +5,12 @@
 Representing a tree structure in mongodb using mongomapper.
 Highly experimental...just plaing around with mongodb and mongmapper.
 
+So is it smart to store a tree in a document base database in a relational fashion?
+Not sure.
+Sometimes embedded documents wont work (especialy when quering and you do not know at what depth to query).
+
+
+
 Changing the parent of a node is not supported, when creating a child node you have to specify the parent.
 
 == How
