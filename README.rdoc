@@ -1,9 +1,48 @@
-= simplificator-mmds
+= simplificator-mongomapper-tree
 
-Description goes here.
+== What
+
+Representing a tree structure in mongodb using mongomapper.
+Highly experimental...just plaing around with mongodb and mongmapper.
+
+Changing the parent of a node is not supported, when creating a child node you have to specify the parent.
+
+== How
+  class TreeNode
+    include MongoMapper::Document
+    include MongoMapper::Tree
+
+    key :name, String
+
+    key :path, String
+    key :depth, Integer
+
+    key :parent_id, Mongo::ObjectID
+    belongs_to :parent, :class_name => 'TreeNode'
+
+    many :children, :class_name => 'TreeNode', :foreign_key => :parent_id
+  end
+
+  node = TreeNode.create(:name => 'root')
+  child = TreeNode.create(:name => 'child', :parent => node)
+
+  # methods provided
+  node.depth
+  node.ancestors
+  node.self_and_ancestors
+  node.descendants
+  node.self_and_descendants
+
+  node.root
+  node.ancestor_of?(child)
+  node.descendant_of?(child)
+
+
+
+
 
 == Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a

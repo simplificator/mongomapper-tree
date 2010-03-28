@@ -9,15 +9,15 @@ require 'simplificator-mongomapper-tree'
 class Test::Unit::TestCase
 end
 require 'mongo_mapper'
+# TODO: use database with transactions...
 
-# TODO: howto do this?
 MongoMapper.database = 'simplificator-mm-tree-test-will-drop-ot'
 class TreeNode
   include MongoMapper::Document
   include MongoMapper::Tree
-  # make sure this works nicely with the regexps used to look up children and so on
-  PATH_SEPARATOR = '-'
+
   key :name, String
+
   key :path, String
   key :depth, Integer
 
@@ -26,7 +26,4 @@ class TreeNode
   belongs_to :parent, :class_name => 'TreeNode'
 
   many :children, :class_name => 'TreeNode', :foreign_key => :parent_id
-
-
-
 end
